@@ -1,0 +1,30 @@
+import requests
+
+def get_age_from_name(name: str, country: str = None):
+    if not isinstance(name, str) or not name.strip():
+        raise ValueError("Name must be a non-empty string.")
+    url = "https://api.agify.io"
+    params = {"name": name.strip()}
+    if country:
+        params["country_id"] = country.upper()
+
+    try:
+        response = requests.get(url, params=params, timeout=5)
+        response.raise_for_status()  # Raise HTTPError for bad responses
+        data = response.json()
+        return data
+    except requests.exceptions.RequestException as e:
+        print(f"Error contacting Agify.io: {e}")
+        return None
+
+
+imena = ["Luka", "Martina", "Črt", "Loti", "Rok"]
+
+
+
+if __name__ == "__main__":
+    result = get_age_from_name("Nik")
+    if result:
+        print(result['name'])
+        print(result['age'])
+        print(result['count'])
