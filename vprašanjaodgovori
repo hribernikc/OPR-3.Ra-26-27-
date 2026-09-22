@@ -1,0 +1,23 @@
+import requests
+import pprint
+import random
+urlTrivia = "https://opentdb.com/api.php?amount=10&category=24&difficulty=easy&type=multiple"
+
+
+kt = requests.get(urlTrivia).json()
+rez = kt["results"]
+random.shuffle(rez)
+
+
+
+for r in rez:
+    print("-"*120)
+    print(r["question"])
+    vnos = input("Vnesite odgovor:")
+    print(f"pravilen odgovor:{r["correct_answer"]}")
+    print("-"*30)
+    print(f"napačni odgovori:{r["incorrect_answers"]}")
+    if vnos == r["correct_answer"]:
+        print("Pravilen odgovor")
+    else:
+        print("napačen odgovor")
